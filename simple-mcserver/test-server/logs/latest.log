@@ -1,0 +1,24 @@
+[22:49:27] [ServerMain/INFO]: Environment: Environment[sessionHost=https://sessionserver.mojang.com, servicesHost=https://api.minecraftservices.com, name=PROD]
+[22:49:28] [ServerMain/INFO]: Loaded 7 recipes
+[22:49:29] [ServerMain/INFO]: Loaded 1271 advancements
+[22:49:29] [Server thread/INFO]: Starting minecraft server version 1.20.4
+[22:49:29] [Server thread/INFO]: Loading properties
+[22:49:29] [Server thread/INFO]: Default game type: SURVIVAL
+[22:49:29] [Server thread/INFO]: Generating keypair
+[22:49:29] [Server thread/INFO]: Starting Minecraft server on *:25565
+[22:49:29] [Server thread/INFO]: Using epoll channel type
+[22:49:29] [Server thread/INFO]: Preparing level "world"
+[22:49:31] [Server thread/INFO]: Preparing start region for dimension minecraft:overworld
+[22:49:32] [Worker-Main-10/INFO]: Preparing spawn area: 0%
+[22:49:32] [Worker-Main-4/INFO]: Preparing spawn area: 0%
+[22:49:32] [Worker-Main-4/INFO]: Preparing spawn area: 0%
+[22:49:32] [Worker-Main-8/INFO]: Preparing spawn area: 0%
+[22:49:33] [Worker-Main-4/INFO]: Preparing spawn area: 0%
+[22:49:33] [Worker-Main-8/INFO]: Preparing spawn area: 35%
+[22:49:33] [Server thread/INFO]: Time elapsed: 2820 ms
+[22:49:33] [Server thread/INFO]: Done (3.979s)! For help, type "help"
+[22:49:45] [User Authenticator #1/INFO]: UUID of player NobleOG is 3318e7fe-b519-4fed-9fd6-33529256a999
+[22:49:45] [Server thread/INFO]: NobleOG[/172.19.0.1:55396] logged in with entity id 110 at (-4.5, 70.0, 1.5)
+[22:49:45] [Server thread/INFO]: NobleOG joined the game
+[22:49:53] [Server thread/INFO]: NobleOG lost connection: Disconnected
+[22:49:53] [Server thread/INFO]: NobleOG left the game

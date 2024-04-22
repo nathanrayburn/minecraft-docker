@@ -1,0 +1,7 @@
+services:
+  server-no-mods:
+    image: minecraft-server:latest
+    ports:
+      - "25565:25565"
+    volumes:
+      - ./test-server:/app
