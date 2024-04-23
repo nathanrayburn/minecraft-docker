@@ -1,0 +1,7 @@
+FROM openjdk:8
+
+WORKDIR /app
+
+COPY server-files /app
+
+CMD ["./ServerStart.sh"]
