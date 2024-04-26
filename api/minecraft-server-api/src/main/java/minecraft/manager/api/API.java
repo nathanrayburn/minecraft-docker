@@ -13,23 +13,24 @@ import minecraft.manager.api.controller.ServerController;
 public class API {
     static final int PORT = 7000;
     static Javalin app;
-
+    static String PATH_TO_SERVER;
 
 
     public static void main(String[] args) {
-        System.out.println("Fitness Program has started");
+        PATH_TO_SERVER = args[1];
+        System.out.println("Minecraft Manager API has started.");
         app = setupApp().start(PORT);
     }
 
     // Separated method to easily test the server
     public static Javalin setupApp() {
         JavalinJte.init(createTemplateEngine());
-        ServerController serverController = new ServerController();
+        ServerController serverController = new ServerController(PATH_TO_SERVER);
 
         // Search static files inside the default folder in dev and just a "static"
         Javalin app = Javalin.create(config -> {
             String folder = "src/main/static";
-            if (System.getenv("FITNESS_PROGRAM") != null) {
+            if (System.getenv("MINECRAFT_SERVER_API") != null) {
                 folder = "static";
             }
             config.staticFiles.add(folder, Location.EXTERNAL);
@@ -37,6 +38,7 @@ public class API {
 
 
         app.get("/startServer", serverController::runServer);
+        app.get("/console", serverController::console);
 
         return app;
     }
