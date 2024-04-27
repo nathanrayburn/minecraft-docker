@@ -3,6 +3,7 @@ import io.javalin.http.Context;
 import minecraft.manager.api.model.ServerManager;
 
 import javax.imageio.IIOException;
+import javax.swing.*;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
@@ -13,20 +14,16 @@ public class ServerController {
     final String PATH_TO_SERVER;
     ServerManager serverManager;
     public ServerController(String PATH_TO_SERVER){
+        serverManager = new ServerManager();
         this.PATH_TO_SERVER = PATH_TO_SERVER;
     }
-    public boolean runServer(Context ctx){
-        serverManager = new ServerManager();
+    public void runServer(Context ctx){
         try{
             serverManager.startServer(PATH_TO_SERVER);
-        }catch (IOException ex){
-            return false;
+        }catch (Exception ex){
+            System.out.printf(ex.getMessage());
         }
-        if(serverManager.getProcess().isAlive()){
-            return true;
-        }
-        return false;
-
+        //if(serverManager.getProcess().isAlive());
     }
     public void stopServer(Context ctx){
         Optional<ProcessHandle> optionalProcessHandle = ProcessHandle.of(serverManager.getSubPid());
@@ -34,15 +31,16 @@ public class ServerController {
             ProcessHandle processHandle = optionalProcessHandle.get();
             if (processHandle.isAlive()) {
                 processHandle.destroy();
-                serverManager.setSubPid(0);
                 System.out.println("Server terminated.");
             }
         }
         if(serverManager.getProcess().isAlive()){
             serverManager.getProcess().destroy();
-            serverManager.setPid(0);
             System.out.println("Script terminated.");
         }
+
+        serverManager.setSubPid(0);
+        serverManager.setPid(0);
     }
     public void console(Context ctx){
 

@@ -9,10 +9,11 @@ public class ServerManager {
     private BufferedReader reader;
     private OutputStream stdin;
     private InputStream stdout;
-    private long pid;
-    private long sub_pid;
+    private long pid = 0;
+    private long sub_pid = 0;
 
     public void startServer(String pathToExecutable) throws IOException {
+        if(this.pid != 0 || this.sub_pid != 0) throw new Error("Server is already running.");
         File workingDirectory = new File(pathToExecutable).getParentFile();
         ProcessBuilder builder = new ProcessBuilder(pathToExecutable);
         builder.directory(workingDirectory);
