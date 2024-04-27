@@ -1,10 +1,5 @@
 package minecraft.manager.api.model;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.PrintWriter;
+import java.io.*;
 import java.sql.SQLOutput;
 
 public class ServerManager {
@@ -16,7 +11,9 @@ public class ServerManager {
     private InputStream stdout;
     private long pid;
     public void startServer(String pathToExecutable) throws IOException {
+        File workingDirectory = new File(pathToExecutable).getParentFile();
         ProcessBuilder builder = new ProcessBuilder(pathToExecutable);
+        builder.directory(workingDirectory);
         builder.redirectErrorStream(true);
         process = builder.start();
         pid = process.pid();
@@ -28,6 +25,18 @@ public class ServerManager {
 
         writer = new PrintWriter(stdin, true);
         reader = new BufferedReader(new InputStreamReader(stdout));
+
+       new Thread(() -> {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(stdout));
+            String line;
+            try {
+                while ((line = reader.readLine()) != null) {
+                    System.out.println(line);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }).start();
     }
     public Process getProcess(){
         return this.process;

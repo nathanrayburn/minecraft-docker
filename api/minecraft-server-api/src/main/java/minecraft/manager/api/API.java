@@ -17,7 +17,7 @@ public class API {
 
 
     public static void main(String[] args) {
-        PATH_TO_SERVER = args[1];
+        PATH_TO_SERVER = args[0];
         System.out.println("Minecraft Manager API has started.");
         app = setupApp().start(PORT);
     }
@@ -38,7 +38,9 @@ public class API {
 
 
         app.get("/startServer", serverController::runServer);
+        app.get("/stopServer",serverController::stopServer);
         app.get("/console", serverController::console);
+
 
         return app;
     }
