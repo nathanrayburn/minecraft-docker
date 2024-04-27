@@ -10,6 +10,8 @@ public class ServerManager {
     private OutputStream stdin;
     private InputStream stdout;
     private long pid;
+    private long sub_pid;
+
     public void startServer(String pathToExecutable) throws IOException {
         File workingDirectory = new File(pathToExecutable).getParentFile();
         ProcessBuilder builder = new ProcessBuilder(pathToExecutable);
@@ -19,6 +21,10 @@ public class ServerManager {
         pid = process.pid();
 
         System.out.println("Minecraft server start PID: " + pid);
+        BufferedReader reader_sub = new BufferedReader(new InputStreamReader(process.getInputStream()));
+        String pidOfSubprocess = reader_sub.readLine();
+        sub_pid = Integer.parseInt(pidOfSubprocess);
+        System.out.println("Subprocess jar PID: " + pidOfSubprocess);
 
         stdin = process.getOutputStream();
         stdout = process.getInputStream();
@@ -41,6 +47,12 @@ public class ServerManager {
     public Process getProcess(){
         return this.process;
     }
+    public void setSubPid(long n){
+        this.sub_pid = n;
+    }
+    public void setPid(long n){
+        this.pid = n;
+    }
     public void sendCommand(String command) {
         writer.println(command);
         writer.flush();
@@ -49,7 +61,9 @@ public class ServerManager {
     public String readResponse() throws IOException {
         return reader.readLine();
     }
-
+    public long getSubPid(){
+        return this.sub_pid;
+    }
     public static void main(String[] args) {
         try {
             ServerManager manager = new ServerManager();

@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+
 public class ServerController {
     final String PATH_TO_SERVER;
     ServerManager serverManager;
@@ -27,9 +29,19 @@ public class ServerController {
 
     }
     public void stopServer(Context ctx){
+        Optional<ProcessHandle> optionalProcessHandle = ProcessHandle.of(serverManager.getSubPid());
+        if (optionalProcessHandle.isPresent()) {
+            ProcessHandle processHandle = optionalProcessHandle.get();
+            if (processHandle.isAlive()) {
+                processHandle.destroy();
+                serverManager.setSubPid(0);
+                System.out.println("Server terminated.");
+            }
+        }
         if(serverManager.getProcess().isAlive()){
             serverManager.getProcess().destroy();
-            if (!serverManager.getProcess().isAlive()) System.out.printf("Server Terminated.");
+            serverManager.setPid(0);
+            System.out.println("Script terminated.");
         }
     }
     public void console(Context ctx){

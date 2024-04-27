@@ -11,8 +11,6 @@ JAVA_PARAMETERS="-XX:+UseG1GC -Dsun.rmi.dgc.server.gcInterval=2147483646 -XX:+Un
 
 # Start the server.
 start_server() {
-   /home/nathan/.sdkman/candidates/java/8.0.402-tem/bin/java -server -Xms${MIN_RAM} -Xmx${MAX_RAM} ${JAVA_PARAMETERS} -jar ${SERVER_JAR} nogui
+   /home/nathan/.sdkman/candidates/java/8.0.402-tem/bin/java -server -Xms${MIN_RAM} -Xmx${MAX_RAM} ${JAVA_PARAMETERS} -jar ${SERVER_JAR} nogui & echo $!
 }
-
-echo "Starting Sky Factory 4 Server..."
 start_server
