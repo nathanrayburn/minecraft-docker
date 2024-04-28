@@ -3,7 +3,7 @@ import java.io.*;
 import java.sql.SQLOutput;
 
 public class ServerManager {
-
+    private ConsoleOutputListener consoleOutputListener;
     private Process process;
     private PrintWriter writer;
     private BufferedReader reader;
@@ -11,6 +11,10 @@ public class ServerManager {
     private InputStream stdout;
     private long pid = 0;
     private long sub_pid = 0;
+
+    public void setConsoleOutputListener(ConsoleOutputListener listener) {
+        this.consoleOutputListener = listener;
+    }
 
     public void startServer(String pathToExecutable) throws IOException {
         if(this.pid != 0 || this.sub_pid != 0) throw new Error("Server is already running.");
@@ -22,10 +26,10 @@ public class ServerManager {
         pid = process.pid();
 
         System.out.println("Minecraft server start PID: " + pid);
-        BufferedReader reader_sub = new BufferedReader(new InputStreamReader(process.getInputStream()));
+        /*BufferedReader reader_sub = new BufferedReader(new InputStreamReader(process.getInputStream()));
         String pidOfSubprocess = reader_sub.readLine();
         sub_pid = Integer.parseInt(pidOfSubprocess);
-        System.out.println("Subprocess jar PID: " + pidOfSubprocess);
+        System.out.println("Subprocess jar PID: " + pidOfSubprocess); */
 
         stdin = process.getOutputStream();
         stdout = process.getInputStream();
@@ -33,17 +37,22 @@ public class ServerManager {
         writer = new PrintWriter(stdin, true);
         reader = new BufferedReader(new InputStreamReader(stdout));
 
-       new Thread(() -> {
+        new Thread(() -> {
+            System.out.println("Starting output reader thread...");
             BufferedReader reader = new BufferedReader(new InputStreamReader(stdout));
             String line;
             try {
                 while ((line = reader.readLine()) != null) {
-                    System.out.println(line);
+                    System.out.println("Read line: " + line);
+                    if (consoleOutputListener != null) {
+                        consoleOutputListener.onNewConsoleOutput(line);
+                    }
                 }
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }).start();
+
     }
     public Process getProcess(){
         return this.process;
@@ -55,6 +64,7 @@ public class ServerManager {
         this.pid = n;
     }
     public void sendCommand(String command) {
+        System.out.println("Sending message: " + command);
         writer.println(command);
         writer.flush();
     }

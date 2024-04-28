@@ -1,0 +1,28 @@
+.console {
+    height: 300px;
+    overflow-y: auto;
+    font-family: monospace;
+    background: #f5f5f5;
+    color: #333;
+}
+
+#consoleOutput {
+    white-space: pre-wrap;
+}
+
+#commandInput {
+    background: #fff;
+    color: #333;
+    border: 1px solid #ccc;
+}
+
+button {
+    display: block;
+    margin-top: 10px;
+}
+.flex {
+    display: flex;
+}
+.flex-grow {
+    flex-grow: 1;
+}

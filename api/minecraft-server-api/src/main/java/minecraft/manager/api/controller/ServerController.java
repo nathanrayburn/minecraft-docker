@@ -1,30 +1,45 @@
 package minecraft.manager.api.controller;
+
 import io.javalin.http.Context;
+import minecraft.manager.api.API;
+import minecraft.manager.api.model.ConsoleOutputListener;
 import minecraft.manager.api.model.ServerManager;
+import io.javalin.Javalin;
+import io.javalin.websocket.WsContext;
 
-import javax.imageio.IIOException;
-import javax.swing.*;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
-public class ServerController {
+public class ServerController implements ConsoleOutputListener {
     final String PATH_TO_SERVER;
     ServerManager serverManager;
+    ConcurrentLinkedQueue<String> consoleOutput = new ConcurrentLinkedQueue<>();
+
     public ServerController(String PATH_TO_SERVER){
         serverManager = new ServerManager();
+        serverManager.setConsoleOutputListener(this);
         this.PATH_TO_SERVER = PATH_TO_SERVER;
     }
+
+    @Override
+    public void onNewConsoleOutput(String line) {
+        consoleOutput.add(line);
+        API.sendToAll(line);
+    }
+
+    public void handleWebSocketMessage(String message) {
+        serverManager.sendCommand(message);
+    }
+
     public void runServer(Context ctx){
         try{
             serverManager.startServer(PATH_TO_SERVER);
         }catch (Exception ex){
             System.out.printf(ex.getMessage());
         }
-        //if(serverManager.getProcess().isAlive());
     }
+
     public void stopServer(Context ctx){
         Optional<ProcessHandle> optionalProcessHandle = ProcessHandle.of(serverManager.getSubPid());
         if (optionalProcessHandle.isPresent()) {
@@ -42,7 +57,9 @@ public class ServerController {
         serverManager.setSubPid(0);
         serverManager.setPid(0);
     }
-    public void console(Context ctx){
 
+    public void console(Context ctx){
+        Map<String, Object> model = new HashMap<>();
+        ctx.render("console.jte", model);
     }
 }
