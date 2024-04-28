@@ -5,7 +5,7 @@ import java.sql.SQLOutput;
 public class ServerManager {
     private ConsoleOutputListener consoleOutputListener;
     private Process process;
-    private PrintWriter writer;
+    private BufferedWriter writer;
     private BufferedReader reader;
     private OutputStream stdin;
     private InputStream stdout;
@@ -34,7 +34,7 @@ public class ServerManager {
         stdin = process.getOutputStream();
         stdout = process.getInputStream();
 
-        writer = new PrintWriter(stdin, true);
+        writer = new BufferedWriter(new OutputStreamWriter(stdin));
         reader = new BufferedReader(new InputStreamReader(stdout));
 
         new Thread(() -> {
@@ -63,9 +63,10 @@ public class ServerManager {
     public void setPid(long n){
         this.pid = n;
     }
-    public void sendCommand(String command) {
+    public void sendCommand(String command) throws IOException {
         System.out.println("Sending message: " + command);
-        writer.println(command);
+        writer.write(command);
+        writer.newLine();
         writer.flush();
     }
 

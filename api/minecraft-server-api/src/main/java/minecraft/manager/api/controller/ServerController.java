@@ -29,7 +29,12 @@ public class ServerController implements ConsoleOutputListener {
     }
 
     public void handleWebSocketMessage(String message) {
-        serverManager.sendCommand(message);
+        try{
+            serverManager.sendCommand(message);
+        }catch (IOException ex){
+            System.out.println(ex.getMessage());
+        }
+
     }
 
     public void runServer(Context ctx){
@@ -38,6 +43,7 @@ public class ServerController implements ConsoleOutputListener {
         }catch (Exception ex){
             System.out.printf(ex.getMessage());
         }
+        ctx.render("console.jte");
     }
 
     public void stopServer(Context ctx){
@@ -56,6 +62,7 @@ public class ServerController implements ConsoleOutputListener {
 
         serverManager.setSubPid(0);
         serverManager.setPid(0);
+        ctx.render("console.jte");
     }
 
     public void console(Context ctx){
