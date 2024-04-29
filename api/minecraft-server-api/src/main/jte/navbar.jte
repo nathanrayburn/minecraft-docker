@@ -1,4 +1,9 @@
-<nav class="w-64 h-screen fixed left-0 top-0 overflow-auto">
+<nav id="navbar" class="bg-gray-200 w-64 h-screen overflow-auto">
+    <div class="hamburger">
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
     <div class="px-6 py-4">
         <h2 class="text-lg font-semibold text-gray-900">MC API</h2>
         <ul class="mt-6">
@@ -11,3 +16,4 @@
         </ul>
     </div>
 </nav>
+<script src="navbar.js"></script>

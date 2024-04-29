@@ -8,21 +8,19 @@
     <link href="custom.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
-<body class="bg-gray-100">
+<body class="">
 <div class="flex">
-    <nav class="bg-gray-200 w-64 h-screen overflow-auto">
         @template.navbar()
-    </nav>
     <div class="main-content flex-grow">
         @template.header()
-        <div class="console bg-black text-white p-4 rounded-lg mb-4 overflow-auto" style="max-height: 75vh; width: 100%; max-width: 100%;">
+        <div class="bg-black text-white rounded text-3xl text-center">Console Banner</div>
+        <div class="console border border-purple-600 border-2 bg-black text-white p-4 rounded-lg mb-4 overflow-auto" style="max-height: 75vh; width: 100%; max-width: 100%;">
             <pre id="console-output" class="max-w-full mx-auto break-words whitespace-pre-wrap"></pre>
         </div>
 
 
-
         <form id="commandForm">
-            <textarea id="commandInput" class="w-full p-2 rounded-lg" rows="2"></textarea>
+            <textarea id="commandInput" placeholder="Press enter to send a command" class="w-full p-2 rounded-lg" rows="2"></textarea>
         </form>
 
         <script src="websocket.js"></script>
