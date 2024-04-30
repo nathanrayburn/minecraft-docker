@@ -69,4 +69,7 @@ public class ServerController implements ConsoleOutputListener {
         Map<String, Object> model = new HashMap<>();
         ctx.render("console.jte", model);
     }
+    public void home(Context ctx){
+        ctx.render("home.jte");
+    }
 }

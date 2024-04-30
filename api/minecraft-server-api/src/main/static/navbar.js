@@ -1,3 +1,8 @@
-document.querySelector('.hamburger').addEventListener('click', function() {
-    document.getElementById('navbar').classList.toggle('open');
-});
+// Initialization for ES Users
+import {
+    Collapse,
+    Dropdown,
+    initTWE,
+} from "tw-elements";
+
+initTWE({ Collapse, Dropdown });

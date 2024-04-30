@@ -13,15 +13,16 @@
         @template.navbar()
     <div class="main-content flex-grow">
         @template.header()
-        <div class="bg-black text-white rounded text-3xl text-center">Console Banner</div>
-        <div class="console border border-purple-600 border-2 bg-black text-white p-4 rounded-lg mb-4 overflow-auto" style="max-height: 75vh; width: 100%; max-width: 100%;">
+        <div class="bg-gradient-to-r from-green-400 to-blue-500 text-white rounded-lg text-3xl text-center p-4 shadow-lg">Server Terminal</div>
+        <div class="console bg-blue-500 text-white p-4 m-4 border border-blue-700 rounded">
             <pre id="console-output" class="max-w-full mx-auto break-words whitespace-pre-wrap"></pre>
         </div>
 
-
-        <form id="commandForm">
-            <textarea id="commandInput" placeholder="Press enter to send a command" class="w-full p-2 rounded-lg" rows="2"></textarea>
-        </form>
+        <div class="input text-white p-4 m-4 rounded">
+            <form id="commandForm">
+                <textarea id="commandInput" placeholder="Press enter to send a command" class="w-full p-2 rounded-lg text-white" rows="2"></textarea>
+            </form>
+        </div>
 
         <script src="websocket.js"></script>
         @template.footer()

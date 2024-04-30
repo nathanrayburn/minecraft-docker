@@ -42,7 +42,8 @@ public class API {
         app.get("/startServer", serverController::runServer);
         app.get("/stopServer",serverController::stopServer);
         app.get("/console", serverController::console);
-
+        app.get("/", serverController::home);
+        app.get("/home", serverController::home);
         setupWebsocket(app);
 
         return app;
